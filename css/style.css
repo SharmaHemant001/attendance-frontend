@@ -84,3 +84,19 @@ input {
   margin-top: 15px;
   font-weight: bold;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: #f4f4f4;
+}

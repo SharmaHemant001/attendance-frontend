@@ -37,7 +37,7 @@ function login() {
 
 // ---------------- LECTURER ----------------
 function startSession() {
-  const result = document.getElementById("sessionResult");
+    const result = document.getElementById("sessionResult");
 
   navigator.geolocation.getCurrentPosition(
     (pos) => {
