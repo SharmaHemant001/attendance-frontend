@@ -1,19 +1,19 @@
 const BASE_URL = "https://attendance-backend-5-027k.onrender.com";
 
+console.log("🔥 main.js loaded");
+
 
 // 🔐 AUTH GUARD
-(function protectPages() {
+(function () {
   const token = localStorage.getItem("token");
   const page = window.location.pathname;
 
-  // Pages that require login
-  const protectedPages = ["lecturer.html", "student.html"];
-
-  if (protectedPages.some(p => page.includes(p)) && !token) {
+  if ((page.includes("lecturer.html") || page.includes("student.html")) && !token) {
     alert("Please login first");
     window.location.href = "index.html";
   }
 })();
+
 
 if (
   window.location.pathname.includes("lecturer.html") ||
