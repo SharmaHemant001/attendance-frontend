@@ -1,29 +1,25 @@
 const BASE_URL = "https://attendance-backend-5-027k.onrender.com";
 
-console.log("🔥 main.js loaded");
-
-
-// 🔐 AUTH GUARD
+// 🔐 AUTH GUARD (Netlify-safe)
 (function () {
   const token = localStorage.getItem("token");
-  const page = window.location.pathname;
 
-  if ((page.includes("lecturer.html") || page.includes("student.html")) && !token) {
+  // detect page by DOM instead of URL
+  const isLecturerPage = document.getElementById("lecturer-page");
+  const isStudentPage = document.getElementById("student-page");
+
+  if ((isLecturerPage || isStudentPage) && !token) {
     alert("Please login first");
     window.location.href = "index.html";
   }
 })();
 
+console.log("🔥 main.js loaded");
 
-if (
-  window.location.pathname.includes("lecturer.html") ||
-  window.location.pathname.includes("student.html")
-) {
-  if (!localStorage.getItem("token")) {
-    alert("Please login first");
-    window.location.href = "index.html";
-  }
-}
+
+
+
+
 
 
 function login() {
