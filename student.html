@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Panel</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2>🎓 Student Dashboard</h2>
+
+    <div class="card">
+      <label>Student ID</label>
+      <input type="text" id="studentId" placeholder="e.g. student01">
+
+      <label>Session ID</label>
+      <input type="text" id="sessionId" placeholder="Enter session ID">
+
+      <button class="btn secondary" onclick="markAttendance()">Mark Attendance</button>
+
+      <div id="attendanceResult"></div>
+    </div>
+
+    <a href="index.html" class="link">⬅ Back to Home</a>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
