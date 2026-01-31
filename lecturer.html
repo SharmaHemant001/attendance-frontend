@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lecturer Panel</title>
+  <title>Lecturer Dashboard</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -10,13 +10,54 @@
   <div class="container">
     <h2>👨‍🏫 Lecturer Dashboard</h2>
 
+    <!-- START SESSION -->
     <div class="card">
-      <label>Lecturer ID</label>
-      <input type="text" id="teacherId" placeholder="e.g. teacher01">
+      <h3>▶ Start Attendance Session</h3>
 
-      <button class="btn" onclick="startSession()">Start Attendance Session</button>
+      
+
+      <button class="btn" onclick="startSession()">Start Session</button>
 
       <div id="sessionResult"></div>
+    </div>
+
+    <!-- VIEW ATTENDANCE LIST -->
+    <div class="card">
+      <h3>📋 Attendance List</h3>
+
+      <label>Session ID</label>
+      <input type="text" id="viewSessionId" placeholder="Enter Session ID">
+
+      <button class="btn secondary" onclick="loadAttendance()">View Attendance</button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Status</th>
+            <th>Manual</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="attendanceTable">
+          <!-- Filled dynamically -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- MANUAL OVERRIDE -->
+    <div class="card">
+      <h3>✍️ Manual Attendance Override</h3>
+
+      <label>Student ID</label>
+      <input type="text" id="manualStudentId" placeholder="Enter Student ID">
+
+      <label>Reason</label>
+      <input type="text" id="manualReason" placeholder="e.g. Phone dead">
+
+      <button class="btn danger" onclick="manualMark()">Mark Manually</button>
+
+      <p id="manualMsg"></p>
     </div>
 
     <a href="index.html" class="link">⬅ Back to Home</a>
