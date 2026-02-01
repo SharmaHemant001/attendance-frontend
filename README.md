@@ -1,67 +1,87 @@
-# 📍 Smart Attendance System – Backend
+# 🎨 Smart Attendance System – Frontend
 
-A secure, real-world backend system for managing classroom attendance using **JWT authentication**, **location verification**, and **time-bound sessions**.
-
-This backend is designed to prevent proxy attendance while still allowing flexibility for real classroom scenarios.
+A clean, modern frontend interface for the Smart Attendance System, built for **teachers and students** with a focus on usability, clarity, and real-time interaction.
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-- 🔐 **JWT-based Authentication**
-  - Role-based access (Teacher / Student)
-  - Secure token-protected APIs
+- 🔐 **Authentication UI**
+  - Login & signup system
+  - Role-based redirection (Teacher / Student)
+  - JWT session handling
 
-- 🧑‍🏫 **Teacher Controls**
-  - Start time-limited attendance sessions
-  - View attendance list in real time
-  - Manual attendance override with reason logging
+- 👨‍🏫 **Lecturer Dashboard**
+  - Start attendance sessions
+  - View attendance records
+  - Manual attendance override
+  - Tab-based clean navigation
 
-- 🧑‍🎓 **Student Attendance**
-  - Attendance allowed only during active sessions
-  - Location-based validation to ensure physical presence
-  - Duplicate attendance prevention
+- 🎓 **Student Dashboard**
+  - Simple interface to mark attendance
+  - Location permission handling
+  - Instant feedback messages
 
-- ⏱️ **Session Management**
-  - Auto-expiring attendance sessions
-  - Backend-controlled session lifecycle
-
-- 🛡️ **Security & Validation**
-  - Protected routes using JWT
-  - Input validation
-  - Role-based access control
+- 🌙 **User Experience Enhancements**
+  - Show / hide password
+  - Dark mode toggle
+  - Responsive layout
+  - Clean and minimal UI
 
 ---
 
 ## 🧠 Tech Stack
 
-- Node.js  
-- Express.js  
-- MongoDB Atlas  
-- Mongoose  
-- JSON Web Tokens (JWT)  
-- REST APIs  
+- HTML5  
+- CSS3  
+- Vanilla JavaScript  
+- Fetch API  
+- JWT Authentication  
 
 ---
 
-## 🌐 API Overview
+## 🖥️ Pages
 
-| Method | Endpoint | Description |
-|------|--------|------------|
-| POST | `/auth/register` | User signup |
-| POST | `/auth/login` | User login |
-| POST | `/session/start` | Start attendance session (Teacher) |
-| POST | `/attendance/mark` | Mark attendance (Student) |
-| GET | `/attendance/session/:id` | View attendance list (Teacher) |
-| POST | `/attendance/manual` | Manual attendance override (Teacher) |
+| Page | Description |
+|----|------------|
+| `index.html` | Login & Signup |
+| `lecturer.html` | Lecturer dashboard |
+| `student.html` | Student dashboard |
 
 ---
 
-## 🔑 Environment Variables
+## 🔗 Backend Integration
 
-Create a `.env` file in the project root:
+Frontend communicates securely with the backend via REST APIs.
 
-```env
-MONGO_URL=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-PORT=5000
+Backend URL:  
+https://attendance-backend-5-027k.onrender.com  
+
+
+## 🌍 Live Demo
+
+Frontend deployed on **Render**  
+🔗 https://attendance-frontend-ep40.onrender.com
+
+---
+
+## ▶️ Run Locally
+
+Open `index.html` in a browser  
+(or use a live server for location access)
+
+---
+
+## 🎯 Design Philosophy
+
+The frontend is designed to:
+- Clearly separate teacher and student roles
+- Minimize confusion
+- Work smoothly on desktop and mobile
+- Support real classroom workflows
+
+---
+
+## 📂 Related Repository
+
+- Backend: https://github.com/SharmaHemant001/attendance-backend
