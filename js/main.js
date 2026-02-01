@@ -184,31 +184,49 @@ function register() {
 
 /* ---------------- LECTURER ---------------- */
 
+let timerInterval;
+
 function startSession() {
   const result = document.getElementById("sessionResult");
+  const timer = document.getElementById("sessionTimer");
 
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      fetch(`${BASE_URL}/session/start`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("token")
-        },
-        body: JSON.stringify({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude
-        })
+  navigator.geolocation.getCurrentPosition(pos => {
+    fetch(`${BASE_URL}/session/start`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      body: JSON.stringify({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
       })
-        .then(res => res.json())
-        .then(data => {
-          result.innerHTML = `✅ Session Started<br><b>Session ID:</b> ${data.sessionId}`;
-        })
-        .catch(() => result.innerText = "Error starting session");
-    },
-    () => result.innerText = "Location permission denied"
-  );
+    })
+      .then(res => res.json())
+      .then(data => {
+        result.innerHTML = `✅ Session Started<br><b>Session ID:</b> ${data.sessionId}`;
+
+        // ⏳ 5-minute timer
+        let remaining = 300;
+        clearInterval(timerInterval);
+
+        timerInterval = setInterval(() => {
+          const min = Math.floor(remaining / 60);
+          const sec = remaining % 60;
+          timer.innerText = `Session Active • Expires in ${min}:${sec < 10 ? "0" : ""}${sec}`;
+
+          if (remaining-- <= 0) {
+            clearInterval(timerInterval);
+            timer.innerText = "Session expired";
+          }
+        }, 1000);
+      })
+      .catch(() => {
+        result.innerText = "Error starting session";
+      });
+  });
 }
+
 
 /* ---------------- STUDENT ---------------- */
 
@@ -313,4 +331,9 @@ function showTab(tabId) {
 
   // Activate clicked tab
   event.target.classList.add("active");
+}
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "index.html";
 }

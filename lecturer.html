@@ -9,6 +9,11 @@
 
   <div class="container">
     <h2>👨‍🏫 Lecturer Dashboard</h2>
+    <div class="top-bar">
+  <span class="role-badge">👨‍🏫 Teacher</span>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
 
     <!-- TABS -->
     <div class="tab-bar">
@@ -21,6 +26,8 @@
     <div id="start" class="tab-content active">
       <h3>Start Attendance Session</h3>
       <button class="btn" onclick="startSession()">Start Session</button>
+      <p id="sessionTimer" class="timer"></p>
+
       <div id="sessionResult"></div>
       <p id="sessionTimer"></p>
     </div>
