@@ -18,11 +18,12 @@
 
 
     <!-- TABS -->
-    <div class="tab-bar">
-      <button class="tab active" onclick="showTab('start')">▶ Start Session</button>
-      <button class="tab" onclick="showTab('attendance')">📋 Attendance</button>
-      <button class="tab" onclick="showTab('manual')">✍️ Manual Override</button>
-    </div>
+    
+<div class="tab-bar">
+  <button class="tab active" data-tab="start">▶ Start Session</button>
+  <button class="tab" data-tab="attendance">📋 Attendance</button>
+  <button class="tab" data-tab="manual">✍️ Manual Override</button>
+</div>
 
     <!-- START SESSION -->
     <div id="start" class="tab-content active">
@@ -43,38 +44,40 @@
 
     <!-- ATTENDANCE LIST -->
     <div id="attendance" class="tab-content">
-      <h3>Attendance List</h3>
+   <div id="attendance" class="tab-content">
+  <div class="card">
+    <h3>Attendance List</h3>
 
-      <input type="text" id="viewSessionId" placeholder="Enter Session ID">
-      <button class="btn secondary" onclick="loadAttendance()">View Attendance</button>
+    <input type="text" id="viewSessionId" placeholder="Enter Session ID">
+    <button class="btn secondary" onclick="loadAttendance()">View Attendance</button>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Student ID</th>
-            <th>Status</th>
-            <th>Manual</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody id="attendanceTable"></tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Status</th>
+          <th>Manual</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody id="attendanceTable"></tbody>
+    </table>
+  </div>
+</div>
+
 
     <!-- MANUAL OVERRIDE -->
     <div id="manual" class="tab-content">
-      <h3>Manual Attendance Override</h3>
+  <div class="card">
+    <h3>Manual Attendance Override</h3>
 
-      <input type="text" id="manualStudentId" placeholder="Enter Student Username">
-      <input type="text" id="manualReason" placeholder="Reason (e.g. Phone dead)">
+    <input type="text" id="manualStudentId" placeholder="Student Username">
+    <input type="text" id="manualReason" placeholder="Reason">
+    <button class="btn danger" onclick="manualMark()">Mark Manually</button>
 
-      <button class="btn danger" onclick="manualMark()">Mark Manually</button>
-      <p id="manualMsg"></p>
-    </div>
-
-   
-   
+    <p id="manualMsg"></p>
   </div>
+</div>
 
   <script src="js/main.js"></script>
 </body>

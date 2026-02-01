@@ -337,3 +337,21 @@ function logout() {
   localStorage.clear();
   window.location.href = "index.html";
 }
+
+// ================= TAB SWITCHING =================
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    // Remove active from all tabs
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+
+    // Hide all content
+    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+
+    // Activate clicked tab
+    tab.classList.add("active");
+
+    // Show matching content
+    const target = tab.getAttribute("data-tab");
+    document.getElementById(target).classList.add("active");
+  });
+});
