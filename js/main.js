@@ -11,9 +11,9 @@ const BASE_URL = "https://attendance-backend-5-027k.onrender.com";
 
 /* ================= AUTH ================= */
 function login() {
-  const username = usernameInput.value;
-  const password = passwordInput.value;
-  msg.innerText = "";
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  const msg = document.getElementById("msg");
 
   fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
@@ -22,30 +22,14 @@ function login() {
   })
     .then(res => res.json())
     .then(data => {
-      if (!data.token) return msg.innerText = "Invalid credentials";
+      if (!data.token) {
+        msg.innerText = "Invalid credentials";
+        return;
+      }
       localStorage.setItem("token", data.token);
       window.location.href = data.role === "teacher" ? "lecturer.html" : "student.html";
     })
     .catch(() => msg.innerText = "Login failed");
-}
-
-function register() {
-  const username = regUsername.value;
-  const password = regPassword.value;
-  const role = regRole.value;
-  msg.innerText = "";
-
-  fetch(`${BASE_URL}/auth/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password, role })
-  })
-    .then(res => res.json())
-    .then(() => {
-      msg.innerText = "Account created! Please login.";
-      showLogin();
-    })
-    .catch(() => msg.innerText = "Signup failed");
 }
 
 function logout() {
@@ -53,7 +37,7 @@ function logout() {
   window.location.href = "index.html";
 }
 
-/* ================= TABS (FIXED) ================= */
+/* ================= TABS ================= */
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".tab").forEach(tab => {
     tab.addEventListener("click", () => {
@@ -68,6 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ================= LECTURER ================= */
 function startSession() {
+  const result = document.getElementById("sessionResult");
+
   navigator.geolocation.getCurrentPosition(pos => {
     fetch(`${BASE_URL}/session/start`, {
       method: "POST",
@@ -75,22 +61,30 @@ function startSession() {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token")
       },
-      body: JSON.stringify({ lat: pos.coords.latitude, lng: pos.coords.longitude })
+      body: JSON.stringify({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+      })
     })
       .then(res => res.json())
-      .then(d => sessionResult.innerHTML = `✅ Session ID: <b>${d.sessionId}</b>`);
+      .then(data => {
+        result.innerHTML = `✅ Session ID: <b>${data.sessionId}</b>`;
+      });
   });
 }
 
 function loadAttendance() {
-  fetch(`${BASE_URL}/attendance/session/${viewSessionId.value}`, {
+  const sessionId = document.getElementById("viewSessionId").value;
+  const table = document.getElementById("attendanceTable");
+
+  fetch(`${BASE_URL}/attendance/session/${sessionId}`, {
     headers: { Authorization: "Bearer " + localStorage.getItem("token") }
   })
     .then(res => res.json())
     .then(data => {
-      attendanceTable.innerHTML = "";
+      table.innerHTML = "";
       data.forEach(r => {
-        attendanceTable.innerHTML += `
+        table.innerHTML += `
           <tr>
             <td>${r.studentId}</td>
             <td>${r.status}</td>
@@ -102,24 +96,28 @@ function loadAttendance() {
 }
 
 function manualMark() {
+  const sessionId = document.getElementById("viewSessionId").value;
+  const studentId = document.getElementById("manualStudentId").value;
+  const reason = document.getElementById("manualReason").value;
+  const msg = document.getElementById("manualMsg");
+
   fetch(`${BASE_URL}/attendance/manual`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("token")
     },
-    body: JSON.stringify({
-      sessionId: viewSessionId.value,
-      studentId: manualStudentId.value,
-      reason: manualReason.value
-    })
+    body: JSON.stringify({ sessionId, studentId, reason })
   })
     .then(res => res.text())
-    .then(t => manualMsg.innerText = t);
+    .then(t => msg.innerText = t);
 }
 
 /* ================= STUDENT ================= */
 function markAttendance() {
+  const sessionId = document.getElementById("sessionId").value;
+  const result = document.getElementById("attendanceResult");
+
   navigator.geolocation.getCurrentPosition(pos => {
     fetch(`${BASE_URL}/attendance/mark`, {
       method: "POST",
@@ -128,12 +126,12 @@ function markAttendance() {
         Authorization: "Bearer " + localStorage.getItem("token")
       },
       body: JSON.stringify({
-        sessionId: sessionId.value,
+        sessionId,
         lat: pos.coords.latitude,
         lng: pos.coords.longitude
       })
     })
       .then(res => res.text())
-      .then(t => attendanceResult.innerText = t);
+      .then(t => result.innerText = t);
   });
 }

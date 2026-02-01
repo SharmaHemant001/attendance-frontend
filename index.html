@@ -10,9 +10,6 @@
 <div class="auth-container">
   <div class="auth-card">
 
-    <!-- 🌙 Dark Mode Toggle -->
-    <button class="dark-toggle" onclick="toggleDark()">🌙</button>
-
     <h1>📍 Smart Attendance</h1>
     <p class="subtitle">Secure · Location-based · Smart</p>
 
@@ -20,15 +17,10 @@
     <div id="loginBox" class="auth-box active">
       <h2>Welcome Back</h2>
 
-      <input id="username" placeholder="Username">
-
-      <div class="password-box">
-        <input id="password" type="password" placeholder="Password">
-        <span onclick="togglePassword('password')">👁</span>
-      </div>
+      <input id="usernameInput" placeholder="Username">
+      <input id="passwordInput" type="password" placeholder="Password">
 
       <button onclick="login()">Login</button>
-      <div class="loader" id="loginLoader"></div>
 
       <p class="switch">
         Don’t have an account?
@@ -37,22 +29,11 @@
     </div>
 
     <!-- SIGNUP -->
-    
-
     <div id="signupBox" class="auth-box">
       <h2>Create Account</h2>
 
       <input id="regUsername" placeholder="Username">
-
-      <div class="password-box">
-        <input id="regPassword" type="password" placeholder="Password" oninput="checkStrength()">
-        <span onclick="togglePassword('regPassword')">👁</span>
-      </div>
-
-      <!-- 🔐 Strength Meter -->
-      <div class="strength">
-        <div id="strengthBar"></div>
-      </div>
+      <input id="regPassword" type="password" placeholder="Password">
 
       <select id="regRole">
         <option value="">Select Role</option>
@@ -61,7 +42,6 @@
       </select>
 
       <button onclick="register()">Sign Up</button>
-      <div class="loader" id="registerLoader"></div>
 
       <p class="switch">
         Already have an account?
@@ -69,11 +49,15 @@
       </p>
     </div>
 
+    <!-- MESSAGE -->
     <p id="msg" class="msg"></p>
 
   </div>
 </div>
 
-<script src="js/main.js"></script>
+
 </body>
+<script src="/js/main.js"></script>
+<link rel="stylesheet" href="/css/style.css">
+
 </html>
