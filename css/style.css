@@ -109,3 +109,75 @@ button:hover {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+
+/* 🌙 Dark Mode */
+body.dark {
+  background: linear-gradient(135deg, #1a202c, #2d3748);
+}
+
+body.dark .auth-card {
+  background: #1f2933;
+  color: #e2e8f0;
+}
+
+body.dark input,
+body.dark select {
+  background: #2d3748;
+  color: white;
+  border: 1px solid #4a5568;
+}
+
+/* 🌙 Toggle Button */
+.dark-toggle {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* 👁 Password Show/Hide */
+.password-box {
+  position: relative;
+}
+
+.password-box span {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  cursor: pointer;
+}
+
+/* 🔐 Password Strength */
+.strength {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#strengthBar {
+  height: 100%;
+  width: 0%;
+  border-radius: 5px;
+  transition: width 0.3s;
+}
+
+/* ⏳ Loader */
+.loader {
+  display: none;
+  margin: 10px auto;
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #6a5acd;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

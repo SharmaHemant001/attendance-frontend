@@ -1,5 +1,33 @@
 const BASE_URL = "https://attendance-backend-5-027k.onrender.com";
 
+// 👁 Show / Hide Password
+function togglePassword(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
+}
+
+// 🌙 Dark Mode
+function toggleDark() {
+  document.body.classList.toggle("dark");
+}
+
+// 🔐 Password Strength Meter
+function checkStrength() {
+  const pwd = document.getElementById("regPassword").value;
+  const bar = document.getElementById("strengthBar");
+
+  let strength = 0;
+  if (pwd.length >= 6) strength++;
+  if (/[A-Z]/.test(pwd)) strength++;
+  if (/[0-9]/.test(pwd)) strength++;
+  if (/[^A-Za-z0-9]/.test(pwd)) strength++;
+
+  const colors = ["red", "orange", "yellow", "lightgreen", "green"];
+  bar.style.width = (strength * 25) + "%";
+  bar.style.background = colors[strength];
+}
+
+
 /* ---------------- UI TOGGLES ---------------- */
 
 function showSignup() {
@@ -71,6 +99,8 @@ function login() {
   loader.style.display = "block";
   msg.innerText = "";
 
+document.getElementById("loginLoader").style.display = "block";
+
   fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -79,6 +109,8 @@ function login() {
     .then(res => res.json())
     .then(data => {
       loader.style.display = "none";
+
+document.getElementById("loginLoader").style.display = "none";
 
       if (!data.token) {
         msg.innerText = "Invalid credentials";
@@ -94,8 +126,13 @@ function login() {
       }
     })
     .catch(() => {
+      document.getElementById("loginLoader").style.display = "none";
+
       loader.style.display = "none";
       msg.innerText = "Login failed";
+
+     
+
     });
 }
 
@@ -115,6 +152,8 @@ function register() {
 
   loader.style.display = "block";
   msg.innerText = "";
+  document.getElementById("registerLoader").style.display = "block";
+
 
   fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
@@ -123,6 +162,8 @@ function register() {
   })
     .then(res => res.text())
     .then(text => {
+      document.getElementById("registerLoader").style.display = "block";
+
       loader.style.display = "none";
       msg.innerText = text;
 
@@ -131,6 +172,8 @@ function register() {
       }
     })
     .catch(() => {
+      document.getElementById("registerLoader").style.display = "block";
+
       loader.style.display = "none";
       msg.innerText = "Registration failed";
     });
