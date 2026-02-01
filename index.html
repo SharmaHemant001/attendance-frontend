@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Smart Attendance System</title>
+  <title>Login</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <div class="container center">
-    <h1>📍 Smart Attendance System</h1>
-    <p>Location-based attendance to prevent proxy attendance</p>
-
-    <div class="card">
-      <a href="lecturer.html" class="btn">👨‍🏫 Lecturer Panel</a>
-      <a href="student.html" class="btn secondary">🎓 Student Panel</a>
-      <button onclick="login()">Login</button>
+<div class="container">
+  <h2>🔐 Login</h2>
 
 
-    </div>
-  </div>
+  <input id="username" placeholder="Username" />
+  <input id="password" type="password" placeholder="Password" />
 
-</body>
+  <button onclick="login()">Login</button>
+
+  <p id="loginMsg"></p>
+</div>
+
 <script src="js/main.js"></script>
+</body>
 </html>
