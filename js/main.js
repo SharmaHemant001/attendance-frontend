@@ -1,5 +1,6 @@
 const BASE_URL = "https://attendance-backend-5-027k.onrender.com";
 
+console.log("🔥 main.js loaded");
 /* ================= AUTH GUARD ================= */
 (function () {
   const token = localStorage.getItem("token");
