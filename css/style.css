@@ -225,3 +225,33 @@ body.dark select {
   background: #6c63ff;
   color: white;
 }
+
+.tab-bar {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #e0e0e0;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tab.active {
+  background: #6c63ff;
+  color: white;
+}
+
+.tab-content {
+  display: none;
+  margin-top: 20px;
+}
+
+.tab-content.active {
+  display: block;
+}

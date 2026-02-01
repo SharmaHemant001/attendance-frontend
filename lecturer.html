@@ -1,82 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Lecturer Dashboard</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body id="lecturer-page">
 
   <div class="container">
     <h2>👨‍🏫 Lecturer Dashboard</h2>
 
     <!-- TABS -->
-    <div class="tabs">
-      <button class="tab-btn active" onclick="showTab('session')">▶ Start Session</button>
-      <button class="tab-btn" onclick="showTab('attendance')">📋 Attendance</button>
-      <button class="tab-btn" onclick="showTab('manual')">✍ Manual Override</button>
+    <div class="tab-bar">
+      <button class="tab active" onclick="showTab('start')">▶ Start Session</button>
+      <button class="tab" onclick="showTab('attendance')">📋 Attendance</button>
+      <button class="tab" onclick="showTab('manual')">✍️ Manual Override</button>
     </div>
 
-    <!-- START SESSION TAB -->
-    <div id="sessionTab" class="tab-content active">
-      <div class="card">
-        <h3>Start Attendance Session</h3>
-
-        <button class="btn" onclick="startSession()">Start Session</button>
-        <div id="sessionResult"></div>
-      </div>
+    <!-- START SESSION -->
+    <div id="start" class="tab-content active">
+      <h3>Start Attendance Session</h3>
+      <button class="btn" onclick="startSession()">Start Session</button>
+      <div id="sessionResult"></div>
+      <p id="sessionTimer"></p>
     </div>
 
-    <!-- ATTENDANCE LIST TAB -->
-    <div id="attendanceTab" class="tab-content">
-      <div class="card">
-        <h3>Attendance List</h3>
+    <!-- ATTENDANCE LIST -->
+    <div id="attendance" class="tab-content">
+      <h3>Attendance List</h3>
 
-        <input type="text" id="manualStudentUsername" placeholder="Student Username">
+      <input type="text" id="viewSessionId" placeholder="Enter Session ID">
+      <button class="btn secondary" onclick="loadAttendance()">View Attendance</button>
 
-
-        <button class="btn secondary" onclick="loadAttendance()">
-          View Attendance
-        </button>
-
-        <table class="attendance-table">
-  <thead>
-    <tr>
-      <th>Student ID</th>
-      <th>Status</th>
-      <th>Manual</th>
-      <th>Time</th>
-    </tr>
-  </thead>
-  <tbody id="attendanceTable"></tbody>
-</table>
-
-
-    <!-- MANUAL OVERRIDE TAB -->
-    <div id="manualTab" class="tab-content">
-      <div class="card">
-        <h3>Manual Attendance Override</h3>
-
-        <input
-          type="text"
-          id="manualStudentId"
-          placeholder="Student ID"
-        />
-
-        <input
-          type="text"
-          id="manualReason"
-          placeholder="Reason (e.g. Phone dead)"
-        />
-
-        <button class="btn danger" onclick="manualMark()">
-          Mark Manually
-        </button>
-
-        <p id="manualMsg"></p>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Status</th>
+            <th>Manual</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="attendanceTable"></tbody>
+      </table>
     </div>
+
+    <!-- MANUAL OVERRIDE -->
+    <div id="manual" class="tab-content">
+      <h3>Manual Attendance Override</h3>
+
+      <input type="text" id="manualStudentId" placeholder="Enter Student Username">
+      <input type="text" id="manualReason" placeholder="Reason (e.g. Phone dead)">
+
+      <button class="btn danger" onclick="manualMark()">Mark Manually</button>
+      <p id="manualMsg"></p>
+    </div>
+
+    <p class="note">
+      🔐 Attendance protected by JWT authentication and location verification.
+    </p>
 
     <a href="index.html" class="link">⬅ Back to Home</a>
   </div>

@@ -295,10 +295,22 @@ function manualMark() {
     .catch(() => msg.innerText = "Error marking attendance");
 }
 
-function showTab(tab) {
-  document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
-  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
 
-  document.getElementById(tab + "Tab").classList.add("active");
+
+function showTab(tabId) {
+  // Hide all sections
+  document.querySelectorAll(".tab-content").forEach(sec => {
+    sec.classList.remove("active");
+  });
+
+  // Remove active from all buttons
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  // Show selected section
+  document.getElementById(tabId).classList.add("active");
+
+  // Activate clicked tab
   event.target.classList.add("active");
 }
