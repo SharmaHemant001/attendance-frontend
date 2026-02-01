@@ -33,29 +33,25 @@
       <div class="card">
         <h3>Attendance List</h3>
 
-        <input
-          type="text"
-          id="viewSessionId"
-          placeholder="Enter Session ID"
-        />
+        <input type="text" id="manualStudentUsername" placeholder="Student Username">
+
 
         <button class="btn secondary" onclick="loadAttendance()">
           View Attendance
         </button>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Student ID</th>
-              <th>Status</th>
-              <th>Manual</th>
-              <th>Time</th>
-            </tr>
-          </thead>
-          <tbody id="attendanceTable"></tbody>
-        </table>
-      </div>
-    </div>
+        <table class="attendance-table">
+  <thead>
+    <tr>
+      <th>Student ID</th>
+      <th>Status</th>
+      <th>Manual</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody id="attendanceTable"></tbody>
+</table>
+
 
     <!-- MANUAL OVERRIDE TAB -->
     <div id="manualTab" class="tab-content">

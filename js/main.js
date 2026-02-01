@@ -284,7 +284,11 @@ function manualMark() {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + localStorage.getItem("token")
     },
-    body: JSON.stringify({ sessionId, studentId, reason })
+    body: JSON.stringify({
+  sessionId,
+  username: document.getElementById("manualStudentUsername").value,
+  reason
+})
   })
     .then(res => res.text())
     .then(text => msg.innerText = text)

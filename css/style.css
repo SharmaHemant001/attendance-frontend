@@ -208,3 +208,20 @@ body.dark select {
   display: block;
 }
 
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.attendance-table th,
+.attendance-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.attendance-table th {
+  background: #6c63ff;
+  color: white;
+}
