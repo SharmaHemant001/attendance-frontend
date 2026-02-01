@@ -1,5 +1,7 @@
 const BASE_URL = "https://attendance-backend-5-027k.onrender.com";
 
+/* ---------------- UI TOGGLES ---------------- */
+
 function showSignup() {
   document.getElementById("loginBox").classList.remove("active");
   document.getElementById("signupBox").classList.add("active");
@@ -12,16 +14,40 @@ function showLogin() {
   document.getElementById("msg").innerText = "";
 }
 
+function togglePassword(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
+}
 
-// 🔐 AUTH GUARD (Netlify-safe)
+function toggleDark() {
+  document.body.classList.toggle("dark");
+}
+
+/* ---------------- PASSWORD STRENGTH ---------------- */
+
+function checkStrength() {
+  const pwd = document.getElementById("regPassword").value;
+  const bar = document.getElementById("strengthBar");
+
+  let strength = 0;
+  if (pwd.length >= 6) strength++;
+  if (/[A-Z]/.test(pwd)) strength++;
+  if (/[0-9]/.test(pwd)) strength++;
+  if (/[^A-Za-z0-9]/.test(pwd)) strength++;
+
+  const colors = ["red", "orange", "yellow", "lightgreen", "green"];
+  bar.style.width = (strength * 25) + "%";
+  bar.style.background = colors[strength];
+}
+
+/* ---------------- AUTH GUARD ---------------- */
+
 (function () {
   const token = localStorage.getItem("token");
+  const isLecturer = document.getElementById("lecturer-page");
+  const isStudent = document.getElementById("student-page");
 
-  // detect page by DOM instead of URL
-  const isLecturerPage = document.getElementById("lecturer-page");
-  const isStudentPage = document.getElementById("student-page");
-
-  if ((isLecturerPage || isStudentPage) && !token) {
+  if ((isLecturer || isStudent) && !token) {
     alert("Please login first");
     window.location.href = "index.html";
   }
@@ -29,15 +55,21 @@ function showLogin() {
 
 console.log("🔥 main.js loaded");
 
-
-
-
-
-
+/* ---------------- LOGIN ---------------- */
 
 function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
+  const loader = document.getElementById("loginLoader");
+  const msg = document.getElementById("msg");
+
+  if (!username || !password) {
+    msg.innerText = "Enter username and password";
+    return;
+  }
+
+  loader.style.display = "block";
+  msg.innerText = "";
 
   fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
@@ -46,7 +78,13 @@ function login() {
   })
     .then(res => res.json())
     .then(data => {
-      // 🔐 SAVE JWT TOKEN HERE
+      loader.style.display = "none";
+
+      if (!data.token) {
+        msg.innerText = "Invalid credentials";
+        return;
+      }
+
       localStorage.setItem("token", data.token);
 
       if (data.role === "teacher") {
@@ -55,16 +93,56 @@ function login() {
         window.location.href = "student.html";
       }
     })
-    .catch(() => alert("Login failed"));
+    .catch(() => {
+      loader.style.display = "none";
+      msg.innerText = "Login failed";
+    });
 }
 
+/* ---------------- REGISTER ---------------- */
 
-// ---------------- LECTURER ----------------
+function register() {
+  const username = document.getElementById("regUsername").value;
+  const password = document.getElementById("regPassword").value;
+  const role = document.getElementById("regRole").value;
+  const loader = document.getElementById("registerLoader");
+  const msg = document.getElementById("msg");
+
+  if (!username || !password || !role) {
+    msg.innerText = "Please fill all fields";
+    return;
+  }
+
+  loader.style.display = "block";
+  msg.innerText = "";
+
+  fetch(`${BASE_URL}/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password, role })
+  })
+    .then(res => res.text())
+    .then(text => {
+      loader.style.display = "none";
+      msg.innerText = text;
+
+      if (text.toLowerCase().includes("success")) {
+        setTimeout(showLogin, 1000);
+      }
+    })
+    .catch(() => {
+      loader.style.display = "none";
+      msg.innerText = "Registration failed";
+    });
+}
+
+/* ---------------- LECTURER ---------------- */
+
 function startSession() {
-    const result = document.getElementById("sessionResult");
+  const result = document.getElementById("sessionResult");
 
   navigator.geolocation.getCurrentPosition(
-    (pos) => {
+    pos => {
       fetch(`${BASE_URL}/session/start`, {
         method: "POST",
         headers: {
@@ -78,24 +156,15 @@ function startSession() {
       })
         .then(res => res.json())
         .then(data => {
-          result.innerHTML = `
-            ✅ Session Started <br>
-            <b>Session ID:</b> ${data.sessionId}
-          `;
+          result.innerHTML = `✅ Session Started<br><b>Session ID:</b> ${data.sessionId}`;
         })
-        .catch(() => {
-          result.innerText = "Error starting session";
-        });
+        .catch(() => result.innerText = "Error starting session");
     },
-    () => {
-      result.innerText = "Location permission denied";
-    }
+    () => result.innerText = "Location permission denied"
   );
 }
 
-
-
-// ---------------- STUDENT ----------------
+/* ---------------- STUDENT ---------------- */
 
 function markAttendance() {
   const sessionId = document.getElementById("sessionId").value;
@@ -107,7 +176,7 @@ function markAttendance() {
   }
 
   navigator.geolocation.getCurrentPosition(
-    (pos) => {
+    pos => {
       fetch(`${BASE_URL}/attendance/mark`, {
         method: "POST",
         headers: {
@@ -121,26 +190,20 @@ function markAttendance() {
         })
       })
         .then(res => res.text())
-        .then(msg => {
-          result.innerText = msg;
-        })
-        .catch(err => {
-          result.innerText = "Error: " + err;
-        });
+        .then(msg => result.innerText = msg)
+        .catch(() => result.innerText = "Error marking attendance");
     },
-    () => {
-      result.innerText = "Location permission denied";
-    }
+    () => result.innerText = "Location permission denied"
   );
 }
+
+/* ---------------- TEACHER VIEW ---------------- */
 
 function loadAttendance() {
   const sessionId = document.getElementById("viewSessionId").value;
 
   fetch(`${BASE_URL}/attendance/session/${sessionId}`, {
-    headers: {
-      "Authorization": "Bearer " + localStorage.getItem("token")
-    }
+    headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
   })
     .then(res => res.json())
     .then(data => {
@@ -153,8 +216,7 @@ function loadAttendance() {
             <td>${r.studentId}</td>
             <td>${r.status}</td>
             <td>${r.manual ? "Yes" : "No"}</td>
-          </tr>
-        `;
+          </tr>`;
       });
     });
 }
