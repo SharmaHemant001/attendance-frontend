@@ -13,11 +13,16 @@ console.log("🔥 main.js loaded");
 
 /* ================= LOGIN ================= */
 function login() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+  const username = document.getElementById("usernameInput").value;
+  const password = document.getElementById("passwordInput").value;
   const msg = document.getElementById("msg");
 
   msg.innerText = "";
+
+  if (!username || !password) {
+    msg.innerText = "Enter username and password";
+    return;
+  }
 
   fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
@@ -30,11 +35,17 @@ function login() {
         msg.innerText = "Invalid credentials";
         return;
       }
+
       localStorage.setItem("token", data.token);
-      window.location.href = data.role === "teacher" ? "lecturer.html" : "student.html";
+
+      window.location.href =
+        data.role === "teacher" ? "lecturer.html" : "student.html";
     })
-    .catch(() => msg.innerText = "Login failed");
+    .catch(() => {
+      msg.innerText = "Login failed";
+    });
 }
+
 
 /* ================= REGISTER ================= */
 function register() {

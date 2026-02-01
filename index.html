@@ -18,7 +18,11 @@
       <h2>Welcome Back</h2>
 
       <input id="usernameInput" placeholder="Username">
-      <input id="passwordInput" type="password" placeholder="Password">
+      <div class="password-box">
+  <input id="passwordInput" type="password" placeholder="Password">
+  <span onclick="togglePassword('passwordInput')">👁</span>
+</div>
+
 
       <button onclick="login()">Login</button>
 
@@ -33,7 +37,10 @@
       <h2>Create Account</h2>
 
       <input id="regUsername" placeholder="Username">
-      <input id="regPassword" type="password" placeholder="Password">
+     <div class="password-box">
+  <input id="regPassword" type="password" placeholder="Password">
+  <span onclick="togglePassword('regPassword')">👁</span>
+</div>
 
       <select id="regRole">
         <option value="">Select Role</option>

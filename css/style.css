@@ -101,15 +101,6 @@ button:hover {
   position: relative;
 }
 
-.password-box span {
-  color: #444;
-  z-index: 10;
-}
-
-body.dark .password-box span {
-  color: #e2e8f0;
-}
-
 
 
 
@@ -287,4 +278,12 @@ td {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+.password-box span {
+  color: #444;
+  z-index: 10;
+}
+
+body.dark .password-box span {
+  color: #e2e8f0;
 }
