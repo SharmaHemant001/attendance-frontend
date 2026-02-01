@@ -7,10 +7,12 @@
 </head>
 <body id="lecturer-page">
 
-  <div class="container">
+<div class="dashboard-header">
+  <div>
     <h2>👨‍🏫 Lecturer Dashboard</h2>
-    <div class="top-bar">
-  <span class="role-badge">👨‍🏫 Teacher</span>
+    <span class="role-badge">Teacher</span>
+  </div>
+
   <button class="logout-btn" onclick="logout()">Logout</button>
 </div>
 
@@ -24,12 +26,19 @@
 
     <!-- START SESSION -->
     <div id="start" class="tab-content active">
-      <h3>Start Attendance Session</h3>
+      <div class="card">
+    <h3>Start Attendance Session</h3>
       <button class="btn" onclick="startSession()">Start Session</button>
       <p id="sessionTimer" class="timer"></p>
+      <p id="sessionTimer" class="muted-text"></p>
+
 
       <div id="sessionResult"></div>
       <p id="sessionTimer"></p>
+       <p class="note">
+      🔐 Attendance protected by JWT authentication and location verification.
+    </p>
+
     </div>
 
     <!-- ATTENDANCE LIST -->
@@ -63,11 +72,8 @@
       <p id="manualMsg"></p>
     </div>
 
-    <p class="note">
-      🔐 Attendance protected by JWT authentication and location verification.
-    </p>
-
-    <a href="index.html" class="link">⬅ Back to Home</a>
+   
+   
   </div>
 
   <script src="js/main.js"></script>
