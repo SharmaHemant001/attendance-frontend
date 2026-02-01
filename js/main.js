@@ -1,5 +1,18 @@
 const BASE_URL = "https://attendance-backend-5-027k.onrender.com";
 
+function showSignup() {
+  document.getElementById("loginBox").classList.remove("active");
+  document.getElementById("signupBox").classList.add("active");
+  document.getElementById("msg").innerText = "";
+}
+
+function showLogin() {
+  document.getElementById("signupBox").classList.remove("active");
+  document.getElementById("loginBox").classList.add("active");
+  document.getElementById("msg").innerText = "";
+}
+
+
 // 🔐 AUTH GUARD (Netlify-safe)
 (function () {
   const token = localStorage.getItem("token");

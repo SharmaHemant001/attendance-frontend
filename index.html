@@ -1,21 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
+  <meta charset="UTF-8">
+  <title>Smart Attendance | Login</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<div class="container">
-  <h2>🔐 Login</h2>
+<div class="auth-container">
+  <div class="auth-card">
 
+    <h1>📍 Smart Attendance</h1>
+    <p class="subtitle">Secure · Location-based · Smart</p>
 
-  <input id="username" placeholder="Username" />
-  <input id="password" type="password" placeholder="Password" />
+    <!-- LOGIN -->
+    <div id="loginBox" class="auth-box active">
+      <h2>Welcome Back</h2>
 
-  <button onclick="login()">Login</button>
+      <input id="username" placeholder="Username">
+      <input id="password" type="password" placeholder="Password">
 
-  <p id="loginMsg"></p>
+      <button onclick="login()">Login</button>
+
+      <p class="switch">
+        Don’t have an account?
+        <span onclick="showSignup()">Sign up</span>
+      </p>
+    </div>
+
+    <!-- SIGNUP -->
+    <div id="signupBox" class="auth-box">
+      <h2>Create Account</h2>
+
+      <input id="regUsername" placeholder="Username">
+      <input id="regPassword" type="password" placeholder="Password">
+
+      <select id="regRole">
+        <option value="">Select Role</option>
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+      </select>
+
+      <button onclick="register()">Sign Up</button>
+
+      <p class="switch">
+        Already have an account?
+        <span onclick="showLogin()">Login</span>
+      </p>
+    </div>
+
+    <p id="msg" class="msg"></p>
+
+  </div>
 </div>
 
 <script src="js/main.js"></script>
