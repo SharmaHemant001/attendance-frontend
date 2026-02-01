@@ -142,42 +142,45 @@ function register() {
   const username = document.getElementById("regUsername").value;
   const password = document.getElementById("regPassword").value;
   const role = document.getElementById("regRole").value;
-  const loader = document.getElementById("registerLoader");
   const msg = document.getElementById("msg");
+  const btn = document.getElementById("signupBtn");
+  const spinner = document.getElementById("spinner");
 
   if (!username || !password || !role) {
-    msg.innerText = "Please fill all fields";
+    msg.innerText = "Fill all fields";
     return;
   }
 
-  loader.style.display = "block";
+  // UI loading state
+  btn.disabled = true;
+  spinner.style.display = "block";
   msg.innerText = "";
-  document.getElementById("registerLoader").style.display = "block";
-
 
   fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password, role })
   })
-    .then(res => res.text())
-    .then(text => {
-      document.getElementById("registerLoader").style.display = "block";
-
-      loader.style.display = "none";
-      msg.innerText = text;
-
-      if (text.toLowerCase().includes("success")) {
-        setTimeout(showLogin, 1000);
-      }
+    .then(async res => {
+      const data = await res.json();
+      if (!res.ok) throw data;
+      return data;
     })
-    .catch(() => {
-      document.getElementById("registerLoader").style.display = "block";
-
-      loader.style.display = "none";
-      msg.innerText = "Registration failed";
+    .then(data => {
+      msg.style.color = "green";
+      msg.innerText = "Account created! Please login";
+      showLogin();
+    })
+    .catch(err => {
+      msg.style.color = "red";
+      msg.innerText = err.message || "Signup failed";
+    })
+    .finally(() => {
+      spinner.style.display = "none";
+      btn.disabled = false;
     });
 }
+
 
 /* ---------------- LECTURER ---------------- */
 
@@ -286,4 +289,12 @@ function manualMark() {
     .then(res => res.text())
     .then(text => msg.innerText = text)
     .catch(() => msg.innerText = "Error marking attendance");
+}
+
+function showTab(tab) {
+  document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+
+  document.getElementById(tab + "Tab").classList.add("active");
+  event.target.classList.add("active");
 }
