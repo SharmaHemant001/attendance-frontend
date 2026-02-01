@@ -163,19 +163,46 @@ function manualMark() {
 /* ================= STUDENT ================= */
 function markAttendance() {
   const sessionId = document.getElementById("sessionId").value;
+  const result = document.getElementById("attendanceResult");
 
-  navigator.geolocation.getCurrentPosition(pos => {
-    fetch(`${BASE_URL}/attendance/mark`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token")
-      },
-      body: JSON.stringify({ sessionId, lat: pos.coords.latitude, lng: pos.coords.longitude })
-    })
-      .then(res => res.text())
-      .then(t => document.getElementById("attendanceResult").innerText = t);
-  });
+  if (!sessionId) {
+    result.innerText = "Enter session ID";
+    return;
+  }
+
+  result.innerText = "Getting location...";
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      fetch(`${BASE_URL}/attendance/mark`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token")
+        },
+        body: JSON.stringify({
+          sessionId,
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
+        })
+      })
+        .then(res => res.text())
+        .then(msg => {
+          result.innerText = msg;
+        })
+        .catch(() => {
+          result.innerText = "Network error";
+        });
+    },
+    (err) => {
+      result.innerText = "Location error. Enable GPS and try again.";
+    },
+    {
+      enableHighAccuracy: true,   // ⭐ VERY IMPORTANT
+      timeout: 15000,
+      maximumAge: 0
+    }
+  );
 }
 
 function logout() {
