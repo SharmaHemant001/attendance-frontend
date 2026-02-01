@@ -374,3 +374,39 @@ th {
   margin-top: 15px;
   font-weight: bold;
 }
+
+.page-center {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.student-card {
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+
+.password-box {
+  position: relative;
+  width: 100%;
+}
+
+.password-box input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.eye-icon:hover {
+  opacity: 1;
+}

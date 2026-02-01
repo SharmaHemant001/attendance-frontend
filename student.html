@@ -2,31 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Student Panel</title>
+  <title>Student Dashboard</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body id="student-page">
 
-  <div class="container">
+<div class="page-center">
+  <div class="card student-card">
     <h2>🎓 Student Dashboard</h2>
 
-    <div class="card">
-      
+    <label>Session ID</label>
+    <input type="text" id="sessionId" placeholder="Enter Session ID">
 
-      <label>Session ID</label>
-      <input type="text" id="sessionId" placeholder="Enter session ID">
+    <button class="btn" onclick="markAttendance()">Mark Attendance</button>
 
-      <button class="btn secondary" onclick="markAttendance()">Mark Attendance</button>
-
-      <div id="attendanceResult"></div>
-    </div>
+    <p id="attendanceResult" class="msg"></p>
 
     <a href="index.html" class="link">⬅ Back to Home</a>
   </div>
+</div>
 
-  
+<script src="js/main.js"></script>
 </body>
-
-<script defer src="/js/main.js"></script>
-
 </html>
